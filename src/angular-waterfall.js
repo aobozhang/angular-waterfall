@@ -1,5 +1,6 @@
 /**
  * Created by Zed on 2015/4/26.
+ * Fork by Aobo on 2017/8/3. -- Add container
  * @name ngWaterfall
  */
 (function(window,angular){
@@ -79,7 +80,13 @@
                         var index = getMinKeyByArray(scope.oLiHeight);
                         var short = scope.oLiHeight[index];
                         var clientHeight = $document[0].documentElement.clientHeight;
-                        var scrollTop = document.documentElement.scrollTop > document.body.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop;
+                        // var scrollTop = document.documentElement.scrollTop > document.body.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop;
+
+                        var scrollTop = Math.max(
+                          document.documentElement.scrollTop,
+                          document.body.scrollTop,
+                          angular.element(document.querySelectorAll("[ng-waterfall-container]")).scrollTop
+                        )
                         if (scrollTop + clientHeight >= short) {
                             scope.$emit("waterfall:loadMore");
                             $window.onscroll = null;
@@ -111,9 +118,6 @@
                             var index = getMinKeyByArray(scope.oLiHeight);
                             oLis[k].style.top = scope.oLiHeight[index] +"px";
                             oLis[k].style.left = colWidth * index +"px";
-//                            oLis[k].style.opacity = "1";
-//                            oLis[k].style["-moz-opacity"] = "1";
-//                            oLis[k].style["filter"] = "alpha(opacity=100)";
                             scope.oLiHeight[index] = scope.oLiHeight[index] + parseInt(oLis[k].offsetHeight)
 
                         }
