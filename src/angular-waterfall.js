@@ -87,10 +87,11 @@
                           document.body.scrollTop,
                           containerST
                         )
-                        
+
                         if (scrollTop + clientHeight >= short) {
                             scope.$emit("waterfall:loadMore");
                             $window.onscroll = null;
+                            angular.element(document.querySelectorAll("[ng-waterfall-container]"))[0].onscroll = null;
                         }
                     }
                     function waterfall(minCols){
