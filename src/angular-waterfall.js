@@ -80,13 +80,14 @@
                         var index = getMinKeyByArray(scope.oLiHeight);
                         var short = scope.oLiHeight[index];
                         var clientHeight = $document[0].documentElement.clientHeight;
-                        // var scrollTop = document.documentElement.scrollTop > document.body.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop;
+                        var containerST = angular.element(document.querySelectorAll("[ng-waterfall-container]"))[0].scrollTop ? angular.element(document.querySelectorAll("[ng-waterfall-container]"))[0].scrollTop : 0;
 
                         var scrollTop = Math.max(
                           document.documentElement.scrollTop,
                           document.body.scrollTop,
-                          angular.element(document.querySelectorAll("[ng-waterfall-container]")).scrollTop
+                          containerST
                         )
+                        
                         if (scrollTop + clientHeight >= short) {
                             scope.$emit("waterfall:loadMore");
                             $window.onscroll = null;
@@ -128,6 +129,7 @@
                         var max = sorted[sorted.length - 1];
                         element[0].style.height = max + 30 + "px";
                         $window.onscroll = scroll;
+                        angular.element(document.querySelectorAll("[ng-waterfall-container]"))[0].onscroll = scroll;
                     }
 
 
